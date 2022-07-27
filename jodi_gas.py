@@ -7,13 +7,6 @@ import io
 import urllib 
 import sys
 
-import pandas as pd
-from datetime import datetime,timedelta
-from matplotlib import pyplot as plt
-from matplotlib import dates as mlp_dates
-import time
-
-
 
 
 URL = "https://www.jodidata.org/_resources/files/downloads/gas-data/jodi_gas_csv_beta.zip"
@@ -46,14 +39,15 @@ with open("data_file/jodi_gas_beta.csv","r") as f:
     #I choose REF_AREA, TIME_PERIOD, ENERGY_PRODUCT and FLOW_BREAKDOWN as relevant for this data extraction
 
     for row in reader:
-
-        #reader = pd.read_csv("data_file/jodi_gas_beta.csv")
-        #reader[row[1]] = pd.to_datetime(row[1])
         
-        #date = reader.sort_values(by="TIME_PERIOD")
-        data["series_id"] = row[0]
-        data["points"] = [row[1],row[5]]
+        #sorted data
+        a = data["points"] = [row[1]]
+        sorted(a)
+
+        data["series_id"] = [row[0]]
+        data["points"] = [a,row[5]]
         data["fields"] = {row[2]:row[3]}
+
 
         json_object = json.dumps(data, indent= 4)
         print(json_object)
